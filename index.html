@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stavy — Gestión de reseñas para hostelería española</title>
+  <meta name="description" content="Más reseñas en Google, mejor posición en Maps, más clientes. Stavy automatiza la reputación online de tu bar o restaurante con inteligencia artificial." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            violet: {
+              50:  '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              800: '#5b21b6',
+              900: '#4c1d95',
+              950: '#2e1065',
+            },
+            ink: '#0f0a1e',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          letterSpacing: {
+            tighter: '-0.04em',
+            tight: '-0.02em',
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; color: #0f0a1e; }
+    .gradient-hero {
+      background: linear-gradient(145deg, #1e0a3c 0%, #2d1060 35%, #3b0f8c 65%, #1a0838 100%);
+    }
+    .gradient-text {
+      background: linear-gradient(90deg, #c4b5fd, #a78bfa, #ddd6fe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .card-hover {
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .card-hover:hover {
+      border-color: #c4b5fd;
+      box-shadow: 0 4px 24px rgba(124,58,237,0.08);
+      transform: translateY(-2px);
+    }
+    .step-line::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: calc(50% + 28px);
+      width: calc(100% - 56px);
+      height: 1px;
+      background: linear-gradient(90deg, #c4b5fd, #ede9fe);
+    }
+    @media (max-width: 768px) {
+      .step-line::after { display: none; }
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-violet-100">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <span class="text-xl font-bold tracking-tight text-ink">sta<span class="text-violet-600">vy</span></span>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#como-funciona" class="text-sm text-gray-500 hover:text-ink transition-colors">Cómo funciona</a>
+        <a href="#reseñas-y-google" class="text-sm text-gray-500 hover:text-ink transition-colors">Por qué importa</a>
+        <a href="#precios" class="text-sm text-gray-500 hover:text-ink transition-colors">Precios</a>
+        <a href="#contacto" class="bg-violet-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-violet-700 transition-colors">Solicitar información</a>
+      </div>
+      <a href="#contacto" class="md:hidden bg-violet-600 text-white text-sm font-semibold px-4 py-2 rounded-lg">Contacto</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="gradient-hero min-h-screen flex items-center justify-center text-center px-6 pt-16">
+    <div class="max-w-4xl mx-auto py-28">
+      <p class="inline-block text-violet-300 text-xs font-semibold tracking-widest uppercase border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 rounded-full mb-8">
+        Automatización de reputación para hostelería
+      </p>
+      <h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter text-white leading-[1.05] mb-7">
+        Más reseñas.<br />
+        <span class="gradient-text">Mejor posición.</span><br />
+        Más clientes.
+      </h1>
+      <p class="text-lg md:text-xl text-violet-200/70 max-w-2xl mx-auto leading-relaxed mb-10">
+        Stavy gestiona la reputación online de tu bar o restaurante de forma completamente automática. Instalamos todo nosotros. Tú solo ves los resultados en tu email.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#contacto" class="bg-violet-500 hover:bg-violet-400 text-white font-semibold px-8 py-4 rounded-xl transition-colors text-base">
+          Quiero empezar — 80€ instalación + 39€/mes
+        </a>
+        <a href="#como-funciona" class="bg-white/8 border border-white/15 hover:bg-white/14 text-white font-medium px-8 py-4 rounded-xl transition-colors text-base">
+          Ver cómo funciona
+        </a>
+      </div>
+
+      <!-- Mock alert card -->
+      <div class="mt-20 max-w-sm mx-auto bg-white/5 border border-white/10 rounded-2xl p-5 text-left backdrop-blur-sm">
+        <div class="flex items-start gap-3">
+          <div class="w-9 h-9 rounded-lg bg-red-500/20 border border-red-400/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-4 h-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126z" /></svg>
+          </div>
+          <div>
+            <p class="text-white text-sm font-semibold">Nueva reseña — Atención requerida</p>
+            <p class="text-violet-300/70 text-xs mt-1">Carlos M. ha dejado 1 estrella hace 23 minutos</p>
+            <p class="text-white/50 text-xs mt-2 italic">"El servicio fue muy lento y la comida llegó fría..."</p>
+            <div class="mt-3 pt-3 border-t border-white/10 flex items-center gap-2">
+              <div class="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse"></div>
+              <p class="text-violet-300 text-xs">Respuesta sugerida lista</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <section id="reseñas-y-google" class="bg-violet-50 border-y border-violet-100 py-16 px-6">
+    <div class="max-w-5xl mx-auto">
+      <p class="text-center text-xs font-semibold uppercase tracking-widest text-violet-500 mb-10">Lo que dicen los datos de Google</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        <div class="px-6">
+          <p class="text-4xl font-bold text-violet-700 tracking-tight mb-2">93%</p>
+          <p class="text-sm text-gray-600 leading-relaxed">de los consumidores lee reseñas online antes de visitar un negocio local</p>
+          <p class="text-xs text-gray-400 mt-2">— BrightLocal Local Consumer Review Survey</p>
+        </div>
+        <div class="px-6 border-x border-violet-200">
+          <p class="text-4xl font-bold text-violet-700 tracking-tight mb-2">#1</p>
+          <p class="text-sm text-gray-600 leading-relaxed">Las reseñas son el factor más determinante del posicionamiento en Google Maps</p>
+          <p class="text-xs text-gray-400 mt-2">— Google Business Profile Help Center</p>
+        </div>
+        <div class="px-6">
+          <p class="text-4xl font-bold text-violet-700 tracking-tight mb-2">+35%</p>
+          <p class="text-sm text-gray-600 leading-relaxed">más clics hacia tu negocio cuando respondes reseñas de forma habitual</p>
+          <p class="text-xs text-gray-400 mt-2">— Google Economic Impact Report</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POR QUÉ IMPORTA -->
+  <section class="py-28 px-6 bg-white">
+    <div class="max-w-5xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-violet-500 mb-4">El problema real</p>
+          <h2 class="text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-6">
+            Tienes reseñas negativas sin responder.<br />
+            <span class="text-violet-600">Y no lo sabes.</span>
+          </h2>
+          <p class="text-gray-500 text-lg leading-relaxed mb-6">
+            Gestionar un bar o restaurante no deja tiempo para revisar Google a diario. Una reseña de 1 estrella sin respuesta puede quedarse visible semanas, disuadiendo a decenas de clientes potenciales.
+          </p>
+          <p class="text-gray-500 text-lg leading-relaxed">
+            Mientras tanto, tus competidores acumulan reseñas positivas, responden rápido y suben posiciones en Google Maps. El algoritmo de Google premia exactamente eso: volumen, frecuencia y respuesta.
+          </p>
+        </div>
+        <div class="space-y-4">
+          <div class="bg-red-50 border border-red-100 rounded-xl p-5">
+            <p class="font-semibold text-red-700 text-sm mb-1">Sin sistema de reputación</p>
+            <ul class="text-sm text-red-600/80 space-y-2 mt-3">
+              <li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">—</span> Reseñas negativas sin respuesta durante días</li>
+              <li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">—</span> Sin datos sobre qué están criticando tus clientes</li>
+              <li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">—</span> Poca frecuencia de reseñas nuevas, posición estancada</li>
+              <li class="flex items-start gap-2"><span class="text-red-400 mt-0.5">—</span> Tiempo perdido revisando manualmente</li>
+            </ul>
+          </div>
+          <div class="bg-violet-50 border border-violet-200 rounded-xl p-5">
+            <p class="font-semibold text-violet-700 text-sm mb-1">Con Stavy</p>
+            <ul class="text-sm text-violet-700/80 space-y-2 mt-3">
+              <li class="flex items-start gap-2"><span class="text-violet-500 mt-0.5 font-bold">+</span> Alerta en menos de 1 hora cuando llega una reseña negativa</li>
+              <li class="flex items-start gap-2"><span class="text-violet-500 mt-0.5 font-bold">+</span> Análisis automático de cada reseña: qué mejorar, qué funciona</li>
+              <li class="flex items-start gap-2"><span class="text-violet-500 mt-0.5 font-bold">+</span> Más reseñas positivas gracias a las tarjetas NFC</li>
+              <li class="flex items-start gap-2"><span class="text-violet-500 mt-0.5 font-bold">+</span> Informe semanal directo a tu email, sin esfuerzo</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUÉ ES LA AUTOMATIZACIÓN -->
+  <section class="py-28 px-6 bg-violet-50">
+    <div class="max-w-5xl mx-auto text-center mb-16">
+      <p class="text-xs font-semibold uppercase tracking-widest text-violet-500 mb-4">La tecnología detrás</p>
+      <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-5">¿Qué es la automatización<br />y qué hace exactamente?</h2>
+      <p class="text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed">
+        No es una app que tienes que abrir. No es un recordatorio. Es un sistema que trabaja solo, las 24 horas, los 7 días de la semana, sin que tú hagas nada.
+      </p>
+    </div>
+    <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
+      <div class="bg-white border border-violet-100 rounded-2xl p-7 card-hover">
+        <div class="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-violet-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" /></svg>
+        </div>
+        <h3 class="font-semibold text-base mb-3">Vigilancia cada hora</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Cada 60 minutos, el sistema comprueba si hay reseñas nuevas en Google Maps para tu negocio. Si aparece algo, actúa de inmediato.</p>
+      </div>
+      <div class="bg-white border border-violet-100 rounded-2xl p-7 card-hover">
+        <div class="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-violet-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" /></svg>
+        </div>
+        <h3 class="font-semibold text-base mb-3">Análisis con inteligencia artificial</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Una IA lee cada reseña y determina si es positiva, negativa o mixta, qué temas menciona, qué urgencia tiene, y redacta una respuesta adaptada a tu negocio.</p>
+      </div>
+      <div class="bg-white border border-violet-100 rounded-2xl p-7 card-hover">
+        <div class="w-10 h-10 rounded-xl bg-violet-100 flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-violet-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg>
+        </div>
+        <h3 class="font-semibold text-base mb-3">Tú solo recibes lo relevante</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Alerta inmediata si hay algo que requiere tu atención. Informe completo cada lunes con el resumen de la semana, la tendencia y las acciones recomendadas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO FUNCIONA -->
+  <section id="como-funciona" class="py-28 px-6 bg-white">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+        <p class="text-xs font-semibold uppercase tracking-widest text-violet-500 mb-4">El proceso</p>
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-5">Instalamos todo nosotros.<br />Tú no tocas nada.</h2>
+        <p class="text-gray-500 text-lg max-w-xl mx-auto leading-relaxed">Desde que nos llamas hasta que el sistema está funcionando, pasan menos de 48 horas.</p>
+      </div>
+      <div class="grid md:grid-cols-4 gap-0">
+        <div class="relative text-center px-4 pb-8 md:pb-0 step-line">
+          <div class="w-10 h-10 rounded-full bg-violet-600 text-white text-sm font-bold flex items-center justify-center mx-auto mb-5">1</div>
+          <h3 class="font-semibold text-sm mb-2">Nos ponemos en contacto</h3>
+          <p class="text-gray-500 text-xs leading-relaxed">Acordamos día y hora para la visita. Solo necesitamos el nombre y dirección de tu local.</p>
+        </div>
+        <div class="relative text-center px-4 pb-8 md:pb-0 step-line">
+          <div class="w-10 h-10 rounded-full bg-violet-600 text-white text-sm font-bold flex items-center justify-center mx-auto mb-5">2</div>
+          <h3 class="font-semibold text-sm mb-2">Visita presencial al local</h3>
+          <p class="text-gray-500 text-xs leading-relaxed">Instalamos las tarjetas NFC en los lugares estratégicos del local y configuramos el sistema personalizado para tu negocio.</p>
+        </div>
+        <div class="relative text-center px-4 pb-8 md:pb-0 step-line">
+          <div class="w-10 h-10 rounded-full bg-violet-600 text-white text-sm font-bold flex items-center justify-center mx-auto mb-5">3</div>
+          <h3 class="font-semibold text-sm mb-2">El sistema arranca ese mismo día</h3>
+          <p class="text-gray-500 text-xs leading-relaxed">La automatización queda activa. Empieza a monitorizar, analizar y alertar desde el primer momento.</p>
+        </div>
+        <div class="relative text-center px-4">
+          <div class="w-10 h-10 rounded-full bg-violet-600 text-white text-sm font-bold flex items-center justify-center mx-auto mb-5">4</div>
+          <h3 class="font-semibold text-sm mb-2">Tú recibes los resultados</h3>
+          <p class="text-gray-500 text-xs leading-relaxed">Alertas cuando aparece algo importante. Informe semanal cada lunes. Todo en tu email, sin apps, sin accesos adicionales.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NFC SECTION -->
+  <section class="py-28 px-6 bg-ink">
+    <div class="max-w-5xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-violet-400 mb-4">Tarjetas NFC</p>
+          <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight mb-6">
+            La forma más sencilla de conseguir más reseñas positivas.
+          </h2>
+          <p class="text-violet-200/60 text-lg leading-relaxed mb-6">
+            Las tarjetas NFC son pequeños dispositivos físicos que instalamos en tu local — en la barra, en las mesas, en la caja. El cliente acerca el móvil y en un segundo está en la página de reseñas de tu negocio en Google.
+          </p>
+          <p class="text-violet-200/60 text-lg leading-relaxed">
+            Los clientes satisfechos rara vez dejan reseñas porque el proceso les parece tedioso. Con NFC, es tan fácil que lo hacen en el momento, cuando la experiencia aún está fresca.
+          </p>
+          <div class="mt-8 pt-8 border-t border-white/10">
+            <p class="text-violet-300 text-sm font-medium mb-3">Por qué esto mejora tu posición en Google:</p>
+            <ul class="space-y-2 text-sm text-violet-200/60">
+              <li class="flex items-start gap-2"><span class="text-violet-400 font-bold mt-0.5">—</span> Google Maps premia a los negocios con más reseñas recientes y frecuentes</li>
+              <li class="flex items-start gap-2"><span class="text-violet-400 font-bold mt-0.5">—</span> Una media de estrellas más alta mejora el CTR en resultados de búsqueda local</li>
+              <li class="flex items-start gap-2"><span class="text-violet-400 font-bold mt-0.5">—</span> El volumen de reseñas es uno de los tres factores principales del algoritmo de Maps</li>
+            </ul>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+            <p class="text-3xl font-bold text-white mb-1">NFC</p>
+            <p class="text-violet-300/70 text-sm">tarjetas incluidas en la instalación, las que haga falta</p>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+            <p class="text-3xl font-bold text-white mb-1">0</p>
+            <p class="text-violet-300/70 text-sm">acciones necesarias por parte del cliente para dejar su reseña</p>
+          </div>
+          <div class="col-span-2 bg-violet-600/20 border border-violet-500/30 rounded-2xl p-6">
+            <p class="text-white font-semibold text-sm mb-2">Incluido en la instalación</p>
+            <p class="text-violet-300/70 text-sm leading-relaxed">Las tarjetas NFC vienen incluidas en el pago de alta junto con la visita presencial y la configuración del sistema. Las instalamos donde haga falta. Sin coste adicional.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU GET -->
+  <section class="py-28 px-6 bg-white">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+        <p class="text-xs font-semibold uppercase tracking-widest text-violet-500 mb-4">Qué incluye el servicio</p>
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-5">Todo lo que necesitas.<br />Nada que no necesites.</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="border border-gray-100 rounded-2xl p-7 card-hover">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center">
+              <svg class="w-5 h-5 text-violet-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" /></svg>
+            </div>
+            <h3 class="font-semibold text-base">Alertas en menos de 1 hora</h3>
+          </div>
+          <p class="text-gray-500 text-sm leading-relaxed">Cuando aparece una reseña negativa o que requiere respuesta urgente, recibes un email inmediato con el contenido, el análisis y la respuesta sugerida.</p>
+        </div>
+        <div class="border border-gray-100 rounded-2xl p-7 card-hover">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center">
+              <svg class="w-5 h-5 text-violet-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25z" /></svg>
+            </div>
+            <h3 class="font-semibold text-base">Informe semanal cada lunes</h3>
+          </div>
+          <p class="text-gray-500 text-sm leading-relaxed">Resumen completo de la semana: media de estrellas, tendencia respecto a la semana anterior, temas más mencionados y una acción concreta recomendada.</p>
+        </div>
+        <div class="border border-gray-100 rounded-2xl p-7 card-hover">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center">
+              <svg class="w-5 h-5 text-violet-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" /></svg>
+            </div>
+            <h3 class="font-semibold text-base">Análisis de sentimiento por IA</h3>
+          </div>
+          <p class="text-gray-500 text-sm leading-relaxed">Cada reseña se clasifica automáticamente: qué aspectos menciona el cliente, si habla de servicio, comida, precio o ambiente, y qué tono tiene.</p>
+        </div>
+        <div class="border border-gray-100 rounded-2xl p-7 card-hover">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center">
+              <svg class="w-5 h-5 text-violet-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" /></svg>
+            </div>
+            <h3 class="font-semibold text-base">Respuesta sugerida personalizada</h3>
+          </div>
+          <p class="text-gray-500 text-sm leading-relaxed">Para cada reseña negativa o mixta, la IA redacta una respuesta adaptada al tono y al contenido específico. Tú decides si la publicas tal cual o la ajustas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="precios" class="py-28 px-6 bg-violet-50">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+        <p class="text-xs font-semibold uppercase tracking-widest text-violet-500 mb-4">Precios</p>
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-5">Claro, sin letra pequeña.</h2>
+        <p class="text-gray-500 text-lg max-w-lg mx-auto leading-relaxed">Un pago de alta que cubre todo lo presencial. Una cuota mensual para el servicio continuo.</p>
+      </div>
+
+      <div class="max-w-2xl mx-auto mb-8">
+        <div class="bg-ink rounded-3xl p-8 md:p-12 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-violet-900/40 to-transparent pointer-events-none"></div>
+          <div class="relative">
+            <div class="flex flex-wrap items-start justify-between gap-6 mb-8">
+              <div>
+                <p class="text-violet-400 text-xs font-semibold uppercase tracking-widest mb-3">Pago único de alta</p>
+                <p class="text-5xl font-bold text-white tracking-tight">80<span class="text-2xl font-normal text-violet-300/60">€</span></p>
+                <p class="text-violet-300/50 text-sm mt-1">Una sola vez al contratar</p>
+              </div>
+              <div class="text-right">
+                <p class="text-violet-400 text-xs font-semibold uppercase tracking-widest mb-3">Cuota mensual</p>
+                <p class="text-5xl font-bold text-white tracking-tight">39<span class="text-2xl font-normal text-violet-300/60">€/mes</span></p>
+                <p class="text-violet-300/50 text-sm mt-1">Sin permanencia</p>
+              </div>
+            </div>
+            <div class="border-t border-white/10 pt-8">
+              <p class="text-white font-semibold text-sm mb-5">El pago de alta incluye:</p>
+              <div class="grid sm:grid-cols-2 gap-3 mb-8">
+                <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Visita presencial al local</p></div>
+                <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Configuración completa del sistema</p></div>
+                <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Workflow personalizado para tu negocio</p></div>
+                <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Tarjetas NFC instaladas (todas las necesarias)</p></div>
+              </div>
+              <p class="text-white font-semibold text-sm mb-4">La cuota mensual incluye:</p>
+              <div class="grid sm:grid-cols-2 gap-3 mb-8">
+                <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Monitorización continua 24/7</p></div>
+                <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Alertas automáticas por email</p></div>
+                <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Análisis IA de cada reseña</p></div>
+                <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Informe semanal automatizado</p></div>
+              </div>
+              <a href="#contacto" class="block w-full text-center bg-violet-500 hover:bg-violet-400 text-white font-semibold py-4 rounded-xl transition-colors">
+                Solicitar instalación
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-5 max-w-2xl mx-auto">
+        <div class="bg-white border border-violet-100 rounded-2xl p-6 card-hover">
+          <p class="text-xs font-semibold uppercase tracking-widest text-violet-500 mb-3">Plan Pro</p>
+          <p class="text-3xl font-bold tracking-tight mb-1">79<span class="text-lg font-normal text-gray-400">€/mes</span></p>
+          <p class="text-gray-400 text-xs mb-5">+ 80€ alta · 1 local</p>
+          <ul class="space-y-2 text-sm text-gray-500">
+            <li class="flex items-start gap-2"><span class="text-violet-500 font-bold">+</span> Todo el plan base</li>
+            <li class="flex items-start gap-2"><span class="text-violet-500 font-bold">+</span> Alertas por WhatsApp</li>
+            <li class="flex items-start gap-2"><span class="text-violet-500 font-bold">+</span> Soporte prioritario</li>
+          </ul>
+        </div>
+        <div class="bg-white border border-violet-100 rounded-2xl p-6 card-hover">
+          <p class="text-xs font-semibold uppercase tracking-widest text-violet-500 mb-3">Plan Multi</p>
+          <p class="text-3xl font-bold tracking-tight mb-1">149<span class="text-lg font-normal text-gray-400">€/mes</span></p>
+          <p class="text-gray-400 text-xs mb-5">+ alta por local · hasta 5 locales</p>
+          <ul class="space-y-2 text-sm text-gray-500">
+            <li class="flex items-start gap-2"><span class="text-violet-500 font-bold">+</span> Todo el plan Pro</li>
+            <li class="flex items-start gap-2"><span class="text-violet-500 font-bold">+</span> Informe multi-local consolidado</li>
+            <li class="flex items-start gap-2"><span class="text-violet-500 font-bold">+</span> Gestión centralizada</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-28 px-6 bg-white">
+    <div class="max-w-2xl mx-auto">
+      <div class="text-center mb-14">
+        <p class="text-xs font-semibold uppercase tracking-widest text-violet-500 mb-4">Preguntas frecuentes</p>
+        <h2 class="text-4xl font-bold tracking-tight">Dudas habituales</h2>
+      </div>
+      <div class="space-y-5">
+        <div class="border border-gray-100 rounded-2xl p-7">
+          <h3 class="font-semibold text-base mb-3">¿Necesito dar acceso a mi cuenta de Google?</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">No. El sistema trabaja con la URL pública de tu negocio en Google Maps. No necesitas compartir contraseñas ni credenciales de ningún tipo.</p>
+        </div>
+        <div class="border border-gray-100 rounded-2xl p-7">
+          <h3 class="font-semibold text-base mb-3">¿Qué pasa si quiero cancelar?</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">No hay permanencia. Puedes cancelar en cualquier momento con un aviso previo de 15 días. El pago de alta no se devuelve, ya que cubre la instalación realizada.</p>
+        </div>
+        <div class="border border-gray-100 rounded-2xl p-7">
+          <h3 class="font-semibold text-base mb-3">¿Dónde se instalan las tarjetas NFC?</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">En la barra, en las mesas o en la caja, donde más clientes satisfechos pasen. Durante la visita evaluamos juntos los mejores puntos de tu local.</p>
+        </div>
+        <div class="border border-gray-100 rounded-2xl p-7">
+          <h3 class="font-semibold text-base mb-3">¿Funciona para cualquier tipo de hostelería?</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">Sí. Bares, restaurantes, cafeterías, terrazas, locales de comida para llevar. Si tienes ficha en Google Maps, el sistema funciona.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" class="gradient-hero py-28 px-6">
+    <div class="max-w-xl mx-auto">
+      <div class="text-center mb-12">
+        <p class="text-xs font-semibold uppercase tracking-widest text-violet-400 mb-5">Siguiente paso</p>
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-white mb-5">
+          Cuéntanos el nombre<br />de tu negocio.
+        </h2>
+        <p class="text-violet-200/60 text-lg leading-relaxed">
+          Nos ponemos en contacto en menos de 24 horas, acordamos la visita y en 48 horas tu sistema está funcionando.
+        </p>
+      </div>
+
+      <form id="contactForm" class="bg-white/6 border border-white/12 backdrop-blur-sm rounded-2xl p-8 space-y-5">
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-xs font-semibold text-violet-300 uppercase tracking-wider mb-2">Tu nombre</label>
+            <input type="text" name="nombre" required placeholder="María García"
+              class="w-full bg-white/8 border border-white/15 text-white placeholder-white/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-violet-400 focus:bg-white/12 transition-colors" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-violet-300 uppercase tracking-wider mb-2">Nombre del negocio</label>
+            <input type="text" name="negocio" required placeholder="Bar El Rincón"
+              class="w-full bg-white/8 border border-white/15 text-white placeholder-white/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-violet-400 focus:bg-white/12 transition-colors" />
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-xs font-semibold text-violet-300 uppercase tracking-wider mb-2">Teléfono</label>
+            <input type="tel" name="telefono" required placeholder="612 345 678"
+              class="w-full bg-white/8 border border-white/15 text-white placeholder-white/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-violet-400 focus:bg-white/12 transition-colors" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-violet-300 uppercase tracking-wider mb-2">Población</label>
+            <input type="text" name="poblacion" placeholder="Zaragoza"
+              class="w-full bg-white/8 border border-white/15 text-white placeholder-white/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-violet-400 focus:bg-white/12 transition-colors" />
+          </div>
+        </div>
+        <button type="submit" id="submitBtn"
+          class="w-full bg-violet-500 hover:bg-violet-400 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-xl transition-colors text-base mt-2">
+          Solicitar instalación
+        </button>
+        <div id="formSuccess" class="hidden text-center py-3">
+          <p class="text-violet-300 font-semibold text-sm">Mensaje enviado. Te contactamos en menos de 24 horas.</p>
+        </div>
+        <div id="formError" class="hidden text-center py-3">
+          <p class="text-red-400 text-sm">Ha habido un error. Escríbenos directamente a <span class="underline">hola@stavy.es</span></p>
+        </div>
+      </form>
+
+      <p class="text-violet-300/30 text-xs text-center mt-5">Sin compromiso. Sin permanencia.</p>
+    </div>
+  </section>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const success = document.getElementById('formSuccess');
+      const error = document.getElementById('formError');
+      const form = e.target;
+
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
+      success.classList.add('hidden');
+      error.classList.add('hidden');
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nombre:    form.nombre.value.trim(),
+            negocio:   form.negocio.value.trim(),
+            telefono:  form.telefono.value.trim(),
+            poblacion: form.poblacion.value.trim(),
+          }),
+        });
+        if (res.ok) {
+          form.reset();
+          success.classList.remove('hidden');
+          btn.textContent = 'Enviado';
+        } else {
+          throw new Error('error');
+        }
+      } catch {
+        error.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = 'Solicitar instalación';
+      }
+    });
+  </script>
+
+  <!-- FOOTER -->
+  <footer class="bg-ink border-t border-white/6 py-10 px-6">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <span class="text-xl font-bold text-white">sta<span class="text-violet-400">vy</span></span>
+      <p class="text-xs text-white/25 text-center">Gestión de reputación para hostelería · España · hola@stavy.es</p>
+      <p class="text-xs text-white/20">© 2026 Stavy</p>
+    </div>
+  </footer>
+
+</body>
+</html>
