@@ -71,6 +71,112 @@
     @media (max-width: 768px) {
       .step-line::after { display: none; }
     }
+
+    /* ── 3D NFC Card animations ───────────────────────────── */
+    @keyframes float-a {
+      0%, 100% { transform: translateY(0px);   }
+      50%       { transform: translateY(-10px); }
+    }
+    @keyframes float-b {
+      0%, 100% { transform: translateY(-5px); }
+      50%       { transform: translateY(5px);  }
+    }
+
+    .card-scene { perspective: 900px; }
+
+    /* Float siempre (sutil) */
+    .card-float-a { animation: float-a 4s ease-in-out infinite; }
+    .card-float-b { animation: float-b 4.5s ease-in-out infinite; }
+
+    /* 3D spin: solo al hacer hover sobre el wrapper */
+    .card-spin {
+      transform: rotateY(-8deg) rotateX(4deg);
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .card-scene:hover .card-spin {
+      transform: rotateY(12deg) rotateX(-6deg);
+    }
+
+    /* Credit card */
+    .nfc-credit {
+      width: 296px;
+      height: 187px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #3b0f8c 0%, #1e0a3c 40%, #4c1d95 70%, #2d1060 100%);
+      box-shadow:
+        0 32px 64px rgba(0,0,0,0.55),
+        0  0   40px rgba(124,58,237,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.18);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 24px;
+      box-sizing: border-box;
+    }
+    .nfc-credit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 35% 25%, rgba(167,139,250,0.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .nfc-credit .c-logo  { font-size:17px; font-weight:800; color:#fff; letter-spacing:-0.04em; }
+    .nfc-credit .c-logo span { color:#a78bfa; }
+    .nfc-credit .c-stars { font-size:17px; color:#FBBC04; letter-spacing:2px; margin:auto 0; }
+    .nfc-credit .c-label { font-size:10px; font-weight:600; color:rgba(255,255,255,0.8); letter-spacing:0.05em; margin-bottom:5px; }
+    .nfc-credit .c-dots  { display:flex; gap:3px; }
+    .nfc-credit .c-dots span { width:7px; height:7px; border-radius:50%; display:block; }
+
+    /* Acrylic stand */
+    .nfc-stand {
+      width: 192px;
+      height: 272px;
+      border-radius: 20px;
+      background: linear-gradient(160deg, rgba(255,255,255,0.96) 0%, rgba(238,232,255,0.93) 100%);
+      box-shadow:
+        0 32px 64px rgba(0,0,0,0.45),
+        0  0   40px rgba(124,58,237,0.18),
+        inset 0 1px 0 rgba(255,255,255,0.95);
+      border: 1px solid rgba(255,255,255,0.5);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 16px;
+      box-sizing: border-box;
+    }
+    .nfc-stand::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #EA4335, #FBBC04, #34A853, #4285F4);
+      border-radius: 20px 20px 0 0;
+    }
+    .nfc-stand .s-g {
+      width:42px; height:42px; background:white; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .nfc-stand .s-title {
+      font-size:15px; font-weight:700; color:#1e0a3c;
+      text-align:center; line-height:1.3; letter-spacing:-0.02em;
+    }
+    .nfc-stand .s-qr {
+      padding:6px; background:white; border-radius:8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .nfc-stand .s-sub {
+      font-size:9px; color:#6b7280; text-align:center; letter-spacing:0.02em;
+    }
+    .nfc-stand .s-nfc {
+      display:flex; align-items:center; gap:4px;
+      font-size:10px; font-weight:700; color:#7c3aed; letter-spacing:0.1em;
+    }
   </style>
 </head>
 <body class="antialiased">
@@ -105,7 +211,7 @@
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a href="#contacto" class="bg-violet-500 hover:bg-violet-400 text-white font-semibold px-8 py-4 rounded-xl transition-colors text-base">
-          Quiero empezar — 80€ instalación + 39€/mes
+          Solicitar información gratuita
         </a>
         <a href="#como-funciona" class="bg-white/8 border border-white/15 hover:bg-white/14 text-white font-medium px-8 py-4 rounded-xl transition-colors text-base">
           Ver cómo funciona
@@ -306,6 +412,148 @@
     </div>
   </section>
 
+  <!-- NFC CARDS SHOWCASE -->
+  <section class="py-28 px-6 overflow-hidden" style="background:linear-gradient(180deg,#0f0a1e 0%,#1a0838 100%)">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-20">
+        <p class="text-xs font-semibold uppercase tracking-widest text-violet-400 mb-4">Nuestras tarjetas</p>
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight mb-5">
+          Dos formatos para cada espacio.
+        </h2>
+        <p class="text-violet-200/50 text-lg max-w-xl mx-auto leading-relaxed">
+          Diseñadas para que el cliente solo tenga que acercar el móvil. Sin fricción, sin pasos extra.
+        </p>
+      </div>
+
+      <div class="flex flex-col md:flex-row items-center justify-center gap-20 md:gap-28">
+
+        <!-- ── Tarjeta 1: Crédito ── -->
+        <div class="flex flex-col items-center gap-8">
+          <div class="card-scene card-float-a">
+            <div class="card-spin nfc-credit">
+              <!-- Fila superior -->
+              <div class="flex items-start justify-between">
+                <span class="c-logo">sta<span>vy</span></span>
+                <!-- NFC ripple icon -->
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="opacity:.65">
+                  <path d="M6 12c0-3.314 2.686-6 6-6" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M3 12c0-4.971 4.029-9 9-9" stroke="white" stroke-width="1.8" stroke-linecap="round" opacity=".5"/>
+                  <circle cx="12" cy="12" r="2" fill="white"/>
+                </svg>
+              </div>
+              <!-- Estrellas centradas -->
+              <div class="c-stars" style="text-align:center">★★★★★</div>
+              <!-- Fila inferior -->
+              <div class="flex items-end justify-between">
+                <div>
+                  <p class="c-label">Valóranos en Google</p>
+                  <div class="c-dots">
+                    <span style="background:#EA4335"></span>
+                    <span style="background:#FBBC04"></span>
+                    <span style="background:#34A853"></span>
+                    <span style="background:#4285F4"></span>
+                  </div>
+                </div>
+                <!-- QR mini -->
+                <svg width="40" height="40" viewBox="0 0 40 40" style="opacity:.75">
+                  <rect width="40" height="40" rx="4" fill="white" fill-opacity=".12"/>
+                  <rect x="3"  y="3"  width="15" height="15" rx="2" fill="white" fill-opacity=".55"/>
+                  <rect x="5"  y="5"  width="11" height="11" rx="1" fill="#1e0a3c"/>
+                  <rect x="7"  y="7"  width="7"  height="7"  rx="0.5" fill="white" fill-opacity=".8"/>
+                  <rect x="22" y="3"  width="15" height="15" rx="2" fill="white" fill-opacity=".55"/>
+                  <rect x="24" y="5"  width="11" height="11" rx="1" fill="#1e0a3c"/>
+                  <rect x="26" y="7"  width="7"  height="7"  rx="0.5" fill="white" fill-opacity=".8"/>
+                  <rect x="3"  y="22" width="15" height="15" rx="2" fill="white" fill-opacity=".55"/>
+                  <rect x="5"  y="24" width="11" height="11" rx="1" fill="#1e0a3c"/>
+                  <rect x="7"  y="26" width="7"  height="7"  rx="0.5" fill="white" fill-opacity=".8"/>
+                  <rect x="22" y="22" width="5"  height="5"  fill="white" fill-opacity=".45"/>
+                  <rect x="29" y="22" width="5"  height="5"  fill="white" fill-opacity=".45"/>
+                  <rect x="22" y="29" width="5"  height="5"  fill="white" fill-opacity=".45"/>
+                  <rect x="29" y="29" width="5"  height="5"  fill="white" fill-opacity=".45"/>
+                  <rect x="25" y="25" width="4"  height="4"  fill="white" fill-opacity=".6"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <p class="text-white font-semibold text-sm">Tarjeta NFC de mesa</p>
+            <p class="text-violet-300/45 text-xs mt-1">Formato tarjeta · Barra y mesas</p>
+          </div>
+        </div>
+
+        <!-- ── Tarjeta 2: Soporte acrílico ── -->
+        <div class="flex flex-col items-center gap-8">
+          <div class="card-scene card-float-b">
+            <div class="card-spin nfc-stand" style="animation-delay:-3s">
+              <!-- Google G -->
+              <div class="s-g">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                  <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                  <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                  <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                  <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+              </div>
+              <!-- Título -->
+              <p class="s-title">Déjanos tu<br/>opinión</p>
+              <!-- QR grande -->
+              <div class="s-qr">
+                <svg width="88" height="88" viewBox="0 0 88 88">
+                  <rect width="88" height="88" rx="6" fill="white"/>
+                  <!-- finder TL -->
+                  <rect x="6"  y="6"  width="30" height="30" rx="3" fill="#1e0a3c"/>
+                  <rect x="10" y="10" width="22" height="22" rx="2" fill="white"/>
+                  <rect x="14" y="14" width="14" height="14" rx="1" fill="#1e0a3c"/>
+                  <!-- finder TR -->
+                  <rect x="52" y="6"  width="30" height="30" rx="3" fill="#1e0a3c"/>
+                  <rect x="56" y="10" width="22" height="22" rx="2" fill="white"/>
+                  <rect x="60" y="14" width="14" height="14" rx="1" fill="#1e0a3c"/>
+                  <!-- finder BL -->
+                  <rect x="6"  y="52" width="30" height="30" rx="3" fill="#1e0a3c"/>
+                  <rect x="10" y="56" width="22" height="22" rx="2" fill="white"/>
+                  <rect x="14" y="60" width="14" height="14" rx="1" fill="#1e0a3c"/>
+                  <!-- data bits -->
+                  <rect x="44" y="44" width="6" height="6" fill="#1e0a3c"/>
+                  <rect x="52" y="44" width="6" height="6" fill="#1e0a3c"/>
+                  <rect x="60" y="44" width="6" height="6" fill="#1e0a3c"/>
+                  <rect x="68" y="44" width="6" height="6" fill="#1e0a3c"/>
+                  <rect x="76" y="44" width="6" height="6" fill="#1e0a3c"/>
+                  <rect x="44" y="52" width="6" height="6" fill="#1e0a3c"/>
+                  <rect x="60" y="52" width="6" height="6" fill="#1e0a3c"/>
+                  <rect x="76" y="52" width="6" height="6" fill="#1e0a3c"/>
+                  <rect x="44" y="60" width="6" height="6" fill="#1e0a3c"/>
+                  <rect x="52" y="60" width="6" height="6" fill="#1e0a3c"/>
+                  <rect x="68" y="60" width="6" height="6" fill="#1e0a3c"/>
+                  <rect x="44" y="68" width="6" height="6" fill="#1e0a3c"/>
+                  <rect x="60" y="68" width="6" height="6" fill="#1e0a3c"/>
+                  <rect x="52" y="76" width="6" height="6" fill="#1e0a3c"/>
+                  <rect x="68" y="76" width="6" height="6" fill="#1e0a3c"/>
+                  <rect x="76" y="68" width="6" height="6" fill="#1e0a3c"/>
+                </svg>
+              </div>
+              <!-- Sub -->
+              <p class="s-sub">Acerca tu móvil o escanea</p>
+              <!-- NFC badge -->
+              <div class="s-nfc">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 12c0-3.314 2.686-6 6-6" stroke="#7c3aed" stroke-width="2.2" stroke-linecap="round"/>
+                  <path d="M2.5 12C2.5 6.201 7.201 1.5 13 1.5" stroke="#7c3aed" stroke-width="2.2" stroke-linecap="round" opacity=".45"/>
+                  <circle cx="12" cy="12" r="2.2" fill="#7c3aed"/>
+                </svg>
+                NFC
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <p class="text-white font-semibold text-sm">Soporte de sobremesa</p>
+            <p class="text-violet-300/45 text-xs mt-1">Acrílico · Mostrador y entrada</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- WHAT YOU GET -->
   <section class="py-28 px-6 bg-white">
     <div class="max-w-5xl mx-auto">
@@ -360,70 +608,38 @@
       <div class="text-center mb-16">
         <p class="text-xs font-semibold uppercase tracking-widest text-violet-500 mb-4">Precios</p>
         <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-5">Claro, sin letra pequeña.</h2>
-        <p class="text-gray-500 text-lg max-w-lg mx-auto leading-relaxed">Un pago de alta que cubre todo lo presencial. Una cuota mensual para el servicio continuo.</p>
+        <p class="text-gray-500 text-lg max-w-lg mx-auto leading-relaxed">Sin costes ocultos, sin permanencia, sin letra pequeña.</p>
       </div>
 
       <div class="max-w-2xl mx-auto mb-8">
         <div class="bg-ink rounded-3xl p-8 md:p-12 relative overflow-hidden">
           <div class="absolute inset-0 bg-gradient-to-br from-violet-900/40 to-transparent pointer-events-none"></div>
           <div class="relative">
-            <div class="flex flex-wrap items-start justify-between gap-6 mb-8">
-              <div>
-                <p class="text-violet-400 text-xs font-semibold uppercase tracking-widest mb-3">Pago único de alta</p>
-                <p class="text-5xl font-bold text-white tracking-tight">80<span class="text-2xl font-normal text-violet-300/60">€</span></p>
-                <p class="text-violet-300/50 text-sm mt-1">Una sola vez al contratar</p>
-              </div>
-              <div class="text-right">
-                <p class="text-violet-400 text-xs font-semibold uppercase tracking-widest mb-3">Cuota mensual</p>
-                <p class="text-5xl font-bold text-white tracking-tight">39<span class="text-2xl font-normal text-violet-300/60">€/mes</span></p>
-                <p class="text-violet-300/50 text-sm mt-1">Sin permanencia</p>
-              </div>
+            <div class="text-center mb-8">
+              <p class="text-violet-400 text-xs font-semibold uppercase tracking-widest mb-4">Todo incluido · Sin coste de alta</p>
+              <p class="text-7xl font-bold text-white tracking-tight">39<span class="text-3xl font-normal text-violet-300/60">€/mes</span></p>
+              <p class="text-violet-300/50 text-sm mt-3">Sin permanencia · Cancela cuando quieras</p>
             </div>
             <div class="border-t border-white/10 pt-8">
-              <p class="text-white font-semibold text-sm mb-5">El pago de alta incluye:</p>
+              <p class="text-white font-semibold text-sm mb-5">Todo esto incluido desde el primer día:</p>
               <div class="grid sm:grid-cols-2 gap-3 mb-8">
                 <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Visita presencial al local</p></div>
+                <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Tarjetas NFC instaladas (las que hagan falta)</p></div>
                 <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Configuración completa del sistema</p></div>
-                <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Workflow personalizado para tu negocio</p></div>
-                <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Tarjetas NFC instaladas (todas las necesarias)</p></div>
-              </div>
-              <p class="text-white font-semibold text-sm mb-4">La cuota mensual incluye:</p>
-              <div class="grid sm:grid-cols-2 gap-3 mb-8">
-                <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Monitorización continua 24/7</p></div>
-                <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Alertas automáticas por email</p></div>
+                <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Monitorización 24/7 de reseñas</p></div>
+                <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Alertas inmediatas por email</p></div>
                 <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Análisis IA de cada reseña</p></div>
                 <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Informe semanal automatizado</p></div>
+                <div class="flex items-start gap-3"><div class="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div><p class="text-violet-200/70 text-sm">Respuesta sugerida por IA en cada reseña</p></div>
               </div>
               <a href="#contacto" class="block w-full text-center bg-violet-500 hover:bg-violet-400 text-white font-semibold py-4 rounded-xl transition-colors">
-                Solicitar instalación
+                Solicitar información gratuita
               </a>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-5 max-w-2xl mx-auto">
-        <div class="bg-white border border-violet-100 rounded-2xl p-6 card-hover">
-          <p class="text-xs font-semibold uppercase tracking-widest text-violet-500 mb-3">Plan Pro</p>
-          <p class="text-3xl font-bold tracking-tight mb-1">79<span class="text-lg font-normal text-gray-400">€/mes</span></p>
-          <p class="text-gray-400 text-xs mb-5">+ 80€ alta · 1 local</p>
-          <ul class="space-y-2 text-sm text-gray-500">
-            <li class="flex items-start gap-2"><span class="text-violet-500 font-bold">+</span> Todo el plan base</li>
-            <li class="flex items-start gap-2"><span class="text-violet-500 font-bold">+</span> Alertas por WhatsApp</li>
-            <li class="flex items-start gap-2"><span class="text-violet-500 font-bold">+</span> Soporte prioritario</li>
-          </ul>
-        </div>
-        <div class="bg-white border border-violet-100 rounded-2xl p-6 card-hover">
-          <p class="text-xs font-semibold uppercase tracking-widest text-violet-500 mb-3">Plan Multi</p>
-          <p class="text-3xl font-bold tracking-tight mb-1">149<span class="text-lg font-normal text-gray-400">€/mes</span></p>
-          <p class="text-gray-400 text-xs mb-5">+ alta por local · hasta 5 locales</p>
-          <ul class="space-y-2 text-sm text-gray-500">
-            <li class="flex items-start gap-2"><span class="text-violet-500 font-bold">+</span> Todo el plan Pro</li>
-            <li class="flex items-start gap-2"><span class="text-violet-500 font-bold">+</span> Informe multi-local consolidado</li>
-            <li class="flex items-start gap-2"><span class="text-violet-500 font-bold">+</span> Gestión centralizada</li>
-          </ul>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -468,29 +684,29 @@
         </p>
       </div>
 
-      <form id="contactForm" class="bg-white/6 border border-white/12 backdrop-blur-sm rounded-2xl p-8 space-y-5">
+      <form id="contactForm" class="bg-white/10 border border-white/15 rounded-2xl p-8 space-y-5" style="position:relative;z-index:10">
         <div class="grid sm:grid-cols-2 gap-5">
           <div>
             <label class="block text-xs font-semibold text-violet-300 uppercase tracking-wider mb-2">Tu nombre</label>
             <input type="text" name="nombre" required placeholder="María García"
-              class="w-full bg-white/8 border border-white/15 text-white placeholder-white/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-violet-400 focus:bg-white/12 transition-colors" />
+              class="w-full border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-violet-400 transition-colors" style="background:rgba(255,255,255,0.1);position:relative;z-index:11" />
           </div>
           <div>
             <label class="block text-xs font-semibold text-violet-300 uppercase tracking-wider mb-2">Nombre del negocio</label>
             <input type="text" name="negocio" required placeholder="Bar El Rincón"
-              class="w-full bg-white/8 border border-white/15 text-white placeholder-white/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-violet-400 focus:bg-white/12 transition-colors" />
+              class="w-full border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-violet-400 transition-colors" style="background:rgba(255,255,255,0.1);position:relative;z-index:11" />
           </div>
         </div>
         <div class="grid sm:grid-cols-2 gap-5">
           <div>
             <label class="block text-xs font-semibold text-violet-300 uppercase tracking-wider mb-2">Teléfono</label>
             <input type="tel" name="telefono" required placeholder="612 345 678"
-              class="w-full bg-white/8 border border-white/15 text-white placeholder-white/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-violet-400 focus:bg-white/12 transition-colors" />
+              class="w-full border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-violet-400 transition-colors" style="background:rgba(255,255,255,0.1);position:relative;z-index:11" />
           </div>
           <div>
             <label class="block text-xs font-semibold text-violet-300 uppercase tracking-wider mb-2">Población</label>
             <input type="text" name="poblacion" placeholder="Zaragoza"
-              class="w-full bg-white/8 border border-white/15 text-white placeholder-white/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-violet-400 focus:bg-white/12 transition-colors" />
+              class="w-full border border-white/20 text-white placeholder-white/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-violet-400 transition-colors" style="background:rgba(255,255,255,0.1);position:relative;z-index:11" />
           </div>
         </div>
         <button type="submit" id="submitBtn"

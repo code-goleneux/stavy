@@ -1,10 +1,7 @@
 {
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
+  "cleanUrls": true,
   "rewrites": [
-    { "source": "/r/:id", "destination": "/api/r/[id]" }
+    { "source": "/r/:id",     "destination": "/api/r/[id]" },
+    { "source": "/dashboard", "destination": "/dashboard.html" }
   ]
 }

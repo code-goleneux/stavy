@@ -14,7 +14,7 @@ const crypto = require('crypto');
 const BARES_FALLBACK = {
   'alambique-sabina': {
     nombre: 'El Alambique de la Sabina',
-    google_maps_review_url: 'https://www.google.com/maps/place/El+Alambique+de+la+Sabina/@41.6444211,-0.8972779,711m/data=!3m1!1e3!4m18!1m9!3m8!1s0xd5914d0786e5d11:0xa9d78a226c2ed264!2sEl+Alambique+de+la+Sabina!8m2!3d41.6444211!4d-0.8972779!9m1!1b1!16s%2Fg%2F1q62mttfc!3m7!1s0xd5914d0786e5d11:0xa9d78a226c2ed264!8m2!3d41.6444211!4d-0.8972779!9m1!1b1!16s%2Fg%2F1q62mttfc?entry=ttu'
+    google_maps_review_url: 'https://www.google.com/maps/place/El+Alambique+de+la+Sabina/@41.6444211,-0.8972779,711m/data=!3m1!1e3!4m18!1m9!3m8!1s0xd5914d0786e5d11:0xa9d78a226c2ed264!2sEl+Alambique+de+la+Sabina!8m2!3d41.6444211!4d-0.8972779!9m1!1b1!16s%2Fg%2F1q62mttfc!3m7!1s0xd5914d0786e5d11:0xa9d78a226c2ed264!8m2!3d41.6444211!4d-0.8972779!9m1!1b1!16s%2Fg%2F1q62mttfc?entry=ttu&g_ep=EgoyMDI2MDUwNi4wIKXMDSoASAFQAw%3D%3D'
   }
 };
 
